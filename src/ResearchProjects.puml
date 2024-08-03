@@ -1,0 +1,31 @@
+@startuml
+class Institution {
+-name: String
+-projects: ArrayList<Project>
++addProject(project: Project): void
++getProjects(): ArrayList<Project>
+}
+
+abstract class Project {
+-name: String
+-director: TitularTeacher
+-budget: double
+-collaborators: Teacher[]
+}
+class InternalProject
+
+abstract class Teacher {
+-name: String
+}
+class TitularTeacher
+class OccasionalTeacher
+
+Institution -->"0..*" Project
+
+InternalProject -left-|> Project
+
+Project -->"1" TitularTeacher
+
+TitularTeacher --|> Teacher
+OccasionalTeacher --|> Teacher
+@enduml
