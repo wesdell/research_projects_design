@@ -1,16 +1,25 @@
 public abstract class Project {
+    private final int lifetime;
+    private final double budget;
     private final String name;
     private final TitularTeacher director;
-    private final double budget;
-    private final Teacher[] collaborators;
+    private TitularTeacher codirector;
 
     public Project(
         String projectName, TitularTeacher projectDirector, double projectBudget,
-        Teacher... projectCollaborators
+        int projectLifetime
     ) {
         name = projectName;
         director = projectDirector;
         budget = projectBudget;
-        collaborators = projectCollaborators;
+        lifetime = projectLifetime;
+    }
+
+    public Project(
+        String projectName, TitularTeacher projectDirector,
+        TitularTeacher projectCodirector, double projectBudget, int projectLifetime
+    ) {
+        this(projectName, projectDirector, projectBudget, projectLifetime);
+        codirector = projectCodirector;
     }
 }
