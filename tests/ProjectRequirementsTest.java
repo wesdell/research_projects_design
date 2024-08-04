@@ -12,8 +12,7 @@ public class ProjectRequirementsTest {
             new InternalProject(
                 "Project 1",
                 lucas,
-                5000.00,
-                new OccasionalTeacher("Edwin")
+                5000.00
             )
         );
 
