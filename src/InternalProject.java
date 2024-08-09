@@ -1,6 +1,6 @@
 public class InternalProject extends Project {
-    public static final int LIFETIME = 1;
-    public static final int MAX_COLLABORATORS = 2;
+    private static final int LIFETIME = 1;
+    private static final int MAX_COLLABORATORS = 2;
 
     public InternalProject(
         String name, TitularTeacher director, TitularTeacher codirector, double budget
