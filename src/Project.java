@@ -43,6 +43,19 @@ public abstract class Project {
         }
     }
 
+    public Project(
+        String projectName, TitularTeacher projectDirector,
+        double projectBudget, int projectLifetime, Teacher[] projectCollaborators
+    ) throws ExceedCollaboratorsException {
+        this(projectName, projectDirector, projectBudget, projectLifetime);
+        collaborators.addAll(List.of(projectCollaborators));
+        if (exceedMaxNumberCollaborators()) {
+            throw new ExceedCollaboratorsException(
+                "There are too many collaborators. Allowed: " + getMaxCollaborators()
+            );
+        }
+    }
+
     private boolean exceedMaxNumberCollaborators() {
         return getInvestigators().size() > getMaxCollaborators();
     }
