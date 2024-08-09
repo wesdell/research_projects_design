@@ -4,7 +4,7 @@ import static org.junit.Assert.assertEquals;
 
 public class InternalProjectTest {
     @Test
-    public void Given_ProjectAndDirector_When_ProjectAskForValidation_Then_ItIsAccepted() {
+    public void Given_InternalProjectAndDirector_When_ProjectAskForValidation_Then_ItIsAccepted() {
         Institution institution = new Institution("EPN");
         TitularTeacher lucas = new TitularTeacher("Lucas");
 
@@ -20,7 +20,7 @@ public class InternalProjectTest {
     }
 
     @Test
-    public void Given_ProjectDirectorAndCodirector_When_ProjectAskForValidation_Then_ItIsAccepted() {
+    public void Given_InternalProjectDirectorAndCodirector_When_ProjectAskForValidation_Then_ItIsAccepted() {
         Institution institution = new Institution("EPN");
         TitularTeacher lucas = new TitularTeacher("Lucas");
         TitularTeacher edwin = new TitularTeacher("Edwin");
@@ -55,7 +55,7 @@ public class InternalProjectTest {
                 )
             );
         } catch (ExceedCollaboratorsException e) {
-            System.out.println(e);
+            System.out.println(e.getMessage());
         }
 
         assertEquals(0, institution.getProjects().size());
