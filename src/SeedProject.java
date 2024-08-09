@@ -1,0 +1,28 @@
+public class SeedProject extends Project {
+    private static final int LIFETIME = 1;
+    private static final int MAX_COLLABORATORS = 5;
+
+    public SeedProject(
+        String name, TitularTeacher director, double budget
+    ) throws ExceedCollaboratorsException {
+        super(name, director, budget, LIFETIME);
+    }
+
+    public SeedProject(
+        String name, TitularTeacher director, TitularTeacher codirector, double budget
+    ) {
+        super(name, director, codirector, budget, LIFETIME);
+    }
+
+    public SeedProject(
+        String name, TitularTeacher director, TitularTeacher codirector, double budget,
+        OccasionalTeacher... collaborators
+    ) throws ExceedCollaboratorsException {
+        super(name, director, codirector, budget, LIFETIME, collaborators);
+    }
+
+    @Override
+    public int getMaxCollaborators() {
+        return MAX_COLLABORATORS;
+    }
+}
