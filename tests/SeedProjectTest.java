@@ -8,7 +8,6 @@ public class SeedProjectTest {
         Institution institution = new Institution("EPN");
         TitularTeacher lucas = new TitularTeacher("Lucas");
         TitularTeacher edwin = new TitularTeacher("Edwin");
-        OccasionalTeacher david = new OccasionalTeacher("David");
 
         institution.addProject(
             new SeedProject(

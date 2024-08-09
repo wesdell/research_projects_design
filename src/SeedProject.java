@@ -4,7 +4,7 @@ public class SeedProject extends Project {
 
     public SeedProject(
         String name, TitularTeacher director, double budget
-    ) throws ExceedCollaboratorsException {
+    ) {
         super(name, director, budget, LIFETIME);
     }
 
@@ -15,8 +15,15 @@ public class SeedProject extends Project {
     }
 
     public SeedProject(
+        String name, TitularTeacher director, double budget,
+        Teacher... collaborators
+    ) throws ExceedCollaboratorsException {
+        super(name, director, budget, LIFETIME, collaborators);
+    }
+
+    public SeedProject(
         String name, TitularTeacher director, TitularTeacher codirector, double budget,
-        OccasionalTeacher... collaborators
+        Teacher... collaborators
     ) throws ExceedCollaboratorsException {
         super(name, director, codirector, budget, LIFETIME, collaborators);
     }
