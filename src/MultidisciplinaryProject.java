@@ -1,6 +1,7 @@
 public class MultidisciplinaryProject extends Project {
     private static final int LIFETIME = 3;
     private static final int MAX_COLLABORATORS = 8;
+    private static final int DEDICATION_HOURS = 8;
 
     public MultidisciplinaryProject(
         String name, TitularTeacher director, double budget
@@ -30,5 +31,10 @@ public class MultidisciplinaryProject extends Project {
     @Override
     public int getMaxCollaborators() {
         return MAX_COLLABORATORS;
+    }
+
+    @Override
+    protected int getDedicationHours() {
+        return DEDICATION_HOURS;
     }
 }

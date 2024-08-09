@@ -18,6 +18,7 @@ public abstract class Project {
         budget = projectBudget;
         lifetime = projectLifetime;
         collaborators = new ArrayList<>();
+        director.setDedicationHours(getDedicationHours());
     }
 
     public Project(
@@ -26,6 +27,7 @@ public abstract class Project {
     ) {
         this(projectName, projectDirector, projectBudget, projectLifetime);
         codirector = projectCodirector;
+        codirector.setDedicationHours(getDedicationHours());
     }
 
     public Project(
@@ -36,6 +38,8 @@ public abstract class Project {
         this(projectName, projectDirector, projectBudget, projectLifetime);
         codirector = projectCodirector;
         collaborators.addAll(List.of(projectCollaborators));
+        codirector.setDedicationHours(getDedicationHours());
+        collaborators.forEach(teacher -> teacher.setDedicationHours(getDedicationHours()));
         if (exceedMaxNumberCollaborators()) {
             throw new ExceedCollaboratorsException(
                 "There are too many collaborators. Allowed: " + getMaxCollaborators()
@@ -49,6 +53,7 @@ public abstract class Project {
     ) throws ExceedCollaboratorsException {
         this(projectName, projectDirector, projectBudget, projectLifetime);
         collaborators.addAll(List.of(projectCollaborators));
+        collaborators.forEach(teacher -> teacher.setDedicationHours(getDedicationHours()));
         if (exceedMaxNumberCollaborators()) {
             throw new ExceedCollaboratorsException(
                 "There are too many collaborators. Allowed: " + getMaxCollaborators()
@@ -72,10 +77,25 @@ public abstract class Project {
         return investigators;
     }
 
+    public double getBudget() {
+        return budget;
+    }
+
+    public boolean isInConflict() {
+        for (Teacher teacher : collaborators) {
+            if (teacher.exceedsNumberOfHours()) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public String toString() {
         return name;
     }
 
-    public abstract int getMaxCollaborators();
+    protected abstract int getMaxCollaborators();
+
+    protected abstract int getDedicationHours();
 }
