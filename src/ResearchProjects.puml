@@ -1,31 +1,124 @@
 @startuml
+skinparam linetype ortho
+
 class Institution {
--name: String
--projects: ArrayList<Project>
-+addProject(project: Project): void
-+getProjects(): ArrayList<Project>
+    - name: String
+    - projects: ArrayList<Project>
+    + addProject(Project): void
+    + orderProjectsInConflictByBudget(): ArrayList<Project>
+    + getProjects(): ArrayList<Project>
+    + getProjectsInConflict(): ArrayList<Project>
 }
 
-abstract class Project {
--name: String
--director: TitularTeacher
--budget: double
--collaborators: Teacher[]
+class Project {
+    - budget: double
+    - name: String
+    - director: TitularTeacher
+    - collaborators: ArrayList<Teacher>
+    - lifetime: int
+    - codirector: TitularTeacher
+    # getMaxCollaborators(): int
+    # getDedicationHours(): int
+    + getInvestigators(): ArrayList<Teacher>
+    + getBudget(): double
+    + isInConflict(): boolean
+    - exceedMaxNumberCollaborators(): boolean
 }
-class InternalProject
 
-abstract class Teacher {
--name: String
+class InternalProject {
+    - LIFETIME: int
+    - MAX_COLLABORATORS: int
+    - DEDICATION_HOURS: int
+    + getMaxCollaborators(): int
+    # getDedicationHours(): int
 }
-class TitularTeacher
-class OccasionalTeacher
 
-Institution -->"0..*" Project
+class MultidisciplinaryProject {
+    - MAX_COLLABORATORS: int
+    - LIFETIME: int
+    - DEDICATION_HOURS: int
+    # getDedicationHours(): int
+    + getMaxCollaborators(): int
+}
 
-InternalProject -left-|> Project
+class SeedProject {
+    - LIFETIME: int
+    - MAX_COLLABORATORS: int
+    - DEDICATION_HOURS: int
+    + getMaxCollaborators(): int
+    # getDedicationHours(): int
+}
 
-Project -->"1" TitularTeacher
+class ProjectByBudgetComparator {
+    + compare(Project, Project): int
+}
 
-TitularTeacher --|> Teacher
-OccasionalTeacher --|> Teacher
+class ExceedCollaboratorsException
+
+class Teacher {
+    - name: String
+    - dedicationHours: int
+    # getMaxNumberOfDedicationHours(): int
+    + setDedicationHours(int): void
+    + exceedsNumberOfHours(): boolean
+}
+
+class TitularTeacher {
+    - MAX_NUMBER_DEDICATION_HOURS: int
+    # getMaxNumberOfDedicationHours(): int
+}
+
+class OccasionalTeacher {
+    - MAX_NUMBER_DEDICATION_HOURS: int
+    # getMaxNumberOfDedicationHours(): int
+}
+
+'Notes
+note bottom of TitularTeacher
+    Dedication hours: 20
+end note
+
+note bottom of OccasionalTeacher
+    Dedication hours: 10
+end note
+
+note top of InternalProject
+    Budget: 10000.00
+    Investigators: 2
+    Lifetime: 1
+    Dedication hours: 4
+end note
+
+note top of SeedProject
+    Budget: 30000.00
+    Investigators: 5
+    Lifetime: 2
+    Dedication hours: 6
+end note
+
+note top of MultidisciplinaryProject
+    Budget: 60000.00
+    Investigators: 8
+    Lifetime: 4
+    Dedication hours: 10
+end note
+
+'Institution realtions
+Institution ..> ProjectByBudgetComparator
+Institution -l->"0..*" Project
+
+'Projects relations
+Project <|---u-  InternalProject
+Project <|---u-  MultidisciplinaryProject
+Project <|---u-  SeedProject
+Project -->"1" TitularTeacher : director
+Project -->"0..1" OccasionalTeacher : codirector
+Project ..> ExceedCollaboratorsException
+InternalProject -->"0..2" Teacher : collaborators
+SeedProject -->"0..5" Teacher : collaborators
+MultidisciplinaryProject -->"0..8" Teacher : collaborators
+
+'Teacher relations
+Teacher <|-- TitularTeacher
+Teacher <|-- OccasionalTeacher
 @enduml
