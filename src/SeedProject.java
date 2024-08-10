@@ -1,6 +1,6 @@
 public class SeedProject extends Project {
-    private static final int LIFETIME = 1;
     private static final int MAX_COLLABORATORS = 5;
+    private static final int LIFETIME = 2;
     private static final int DEDICATION_HOURS = 6;
 
     public SeedProject(
